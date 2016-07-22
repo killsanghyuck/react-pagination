@@ -1,0 +1,4 @@
+node_modules/
+lib/
+samples/bundle.js
+*.log
