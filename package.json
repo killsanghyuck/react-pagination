@@ -1,0 +1,24 @@
+{
+    "name": "react-pagination-bootstrap3",
+    "version": "0.1.2",
+    "description": "react pagination",
+    "keywords": [
+        "react",
+        "react-component",
+        "pagination"
+    ],
+    "homepage": "http://github.com/killsanghyuck/react-paginateion",
+    "main": "lib/react-pagination.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "kill sanghyuck <blain1@naver.com>",
+    "repository": {
+        "type": "git",
+        "url": "http://github.com/killsanghyuck/react-paginateion"
+    },
+    "license": "ISC",
+    "files": [
+        "lib"
+    ]
+}
