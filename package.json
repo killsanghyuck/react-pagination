@@ -1,24 +1,32 @@
 {
-    "name": "react-pagination-bootstrap3",
-    "version": "0.1.2",
-    "description": "react pagination",
-    "keywords": [
-        "react",
-        "react-component",
-        "pagination"
-    ],
-    "homepage": "http://github.com/killsanghyuck/react-paginateion",
-    "main": "lib/react-pagination.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "kill sanghyuck <blain1@naver.com>",
-    "repository": {
-        "type": "git",
-        "url": "http://github.com/killsanghyuck/react-paginateion"
-    },
-    "license": "ISC",
-    "files": [
-        "lib"
-    ]
+  "name": "react-pagination-bootstrap3",
+  "version": "0.1.3",
+  "description": "",
+  "main": "react-pagination-bootstrap3.js",
+  "directories": {
+    "example": "examples"
+  },
+  "dependencies": {
+    "react": "^15.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.4.0",
+    "babel-eslint": "^4.1.3",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babelify": "^7.2.0",
+    "browserify": "^13.0.0",
+    "react": "^15.0.0",
+    "react-dom": "^15.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/killsanghyuck/react-paginateion.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/killsanghyuck/react-paginateion/issues"
+  },
+  "homepage": "https://github.com/killsanghyuck/react-paginateion#readme"
 }

@@ -1,5 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+var Paginate = require('../react-pagination.js');
 
 var Demo = React.createClass({
     render: function(){
