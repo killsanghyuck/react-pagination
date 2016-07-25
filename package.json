@@ -1,29 +1,32 @@
 {
   "name": "react-pagination-bootstrap3",
   "version": "0.1.3",
-  "description": "",
+  "description": "react-pagination-bootstrap3",
   "main": "lib/react-pagination-bootstrap3.js",
   "directories": {
     "example": "examples"
+  },
+  "script": {
+      "build": "babel --presets react src --watch --out-dir lib",
+      "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "react": "^15.0.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.4.0",
+    "babel-cli": "^6.0.0",
     "babel-eslint": "^4.1.3",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "babelify": "^7.2.0",
     "browserify": "^13.0.0",
-    "react": "^15.0.0",
     "react-dom": "^15.0.0"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/killsanghyuck/react-paginateion.git"
   },
-  "author": "",
+  "author": "Kill sanghyuck <blain1@naver.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/killsanghyuck/react-paginateion/issues"

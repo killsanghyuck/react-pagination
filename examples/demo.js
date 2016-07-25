@@ -1,6 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var Paginate = require('../react-pagination.js');
+var Paginate = require('../lib/react-pagination-bootstrap3.js');
 
 var Demo = React.createClass({
     render: function(){
