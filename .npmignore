@@ -2,3 +2,5 @@
 .git*
 Makefile
 examples/
+react-pagination-bootstrap3-nonebuild.js
+.npmignore
