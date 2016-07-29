@@ -1,11 +1,11 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var Paginate = require('../lib/react-pagination-bootstrap3.js');
+var Paginate = require('../lib/react-pagination-component.js');
 
 var Demo = React.createClass({
     render: function(){
         return(
-            <Paginate test='2323232323'/>
+            <Paginate totalPages='100' focusNum='6' />
         );
     }
 });

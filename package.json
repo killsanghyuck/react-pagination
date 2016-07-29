@@ -1,17 +1,19 @@
 {
-  "name": "react-pagination-bootstrap3",
-  "version": "0.1.3",
-  "description": "react-pagination-bootstrap3",
-  "main": "lib/react-pagination-bootstrap3.js",
+  "name": "react-pagination-component",
+  "version": "0.1.5",
+  "description": "react-pagination-component",
+  "main": "lib/react-pagination-component.js",
   "directories": {
     "example": "examples"
   },
   "script": {
-      "build": "babel --presets react src --watch --out-dir lib",
-      "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "babel --presets react src --watch --out-dir lib",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "react": "^15.0.0"
+    "bootstrap": "^3.3.7",
+    "react": "^15.0.0",
+    "react-bootstrap": "^0.30.0"
   },
   "devDependencies": {
     "babel-cli": "^6.0.0",

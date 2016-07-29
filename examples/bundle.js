@@ -1,19 +1,19 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
-var Paginate = require('../lib/react-pagination-bootstrap3.js');
+var Paginate = require('../lib/react-pagination-component.js');
 
 var Demo = React.createClass({
     displayName: 'Demo',
 
     render: function () {
-        return React.createElement(Paginate, { test: '2323232323' });
+        return React.createElement(Paginate, { totalPages: '100', focusNum: '6' });
     }
 });
 
 ReactDOM.render(React.createElement(Demo, null), document.getElementById('demo'));
 
-},{"../lib/react-pagination-bootstrap3.js":2,"react":172,"react-dom":3}],2:[function(require,module,exports){
+},{"../lib/react-pagination-component.js":2,"react":172,"react-dom":3}],2:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -22,8 +22,73 @@ var ReactDOM = require('react-dom');
 var Paginate = React.createClass({
     displayName: 'Paginate',
 
+    getInitialState() {
+        return {
+            focusNum: this.props.focusNum
+        };
+    },
+
     render: function () {
-        return React.createElement('div', null, React.createElement('h1', null, 'sdsdsdsd'), React.createElement('h2', null, this.props.test));
+        var firstNumGroup = 3;
+        var lastNumGroup = 2;
+        var focusNumGroup = 6;
+        var ellipsisPrint = 4;
+        var block = [];
+        var lastPageNum = this.props.totalPages;
+        var firstPageNum = 1;
+        var i = 1;
+
+        if (this.props.focusNum == null) {
+            this.state.focusNum = 1;
+        }
+
+        var leftellipsisNum = Math.ceil((this.state.focusNum - focusNumGroup / 2 - firstNumGroup) / 2 + firstNumGroup);
+        var rightellipsisNum = Math.ceil((lastPageNum - lastNumGroup - (this.state.focusNum + focusNumGroup / 2)) / 2 + (this.state.focusNum + focusNumGroup / 2));
+
+        var leftellipsis = leftellipsisNum;
+        var rightellipsis = rightellipsisNum;
+
+        if (this.state.focusNum == firstPageNum) {
+            var clickArrowLeft = null;
+            var disabledLeft = 'disabled';
+        } else {
+            clickArrowLeft = 'left';
+        }
+
+        if (this.state.focusNum == lastPageNum) {
+            var clickArrowRight = null;
+            var disabledRight = 'disabled';
+        } else {
+            clickArrowRight = 'right';
+        }
+
+        if (firstPageNum >= lastPageNum) {
+            var left = React.createElement('span', { key: 'left' });
+            block.push(React.createElement('span', { key: 'number' }));
+            var right = React.createElement('span', { key: 'right' });
+        } else {
+            left = React.createElement('li', { className: disabledLeft }, '« ');
+            right = React.createElement('li', { className: disabledRight }, '» ');
+
+            while (i <= lastPageNum) {
+                if (i == ellipsisPrint && this.state.focusNum - firstPageNum > focusNumGroup) {
+                    block.push(React.createElement('li', { key: i }, '... '));
+                    i = this.state.focusNum - focusNumGroup / 2;
+                }
+                if (i == this.state.focusNum + ellipsisPrint && lastPageNum - this.state.focusNum > focusNumGroup) {
+                    block.push(React.createElement('li', { key: i }, ' ... '));
+                    i = lastPageNum - lastNumGroup;
+                }
+                if (i == this.state.focusNum) {
+                    var classname = 'active';
+                } else {
+                    classname = '';
+                }
+                block.push(React.createElement('li', { key: i, className: classname }, ' ', i, ' '));
+                i++;
+            }
+        }
+        return React.createElement('ul', null, left, block, right);
     }
 });
 
