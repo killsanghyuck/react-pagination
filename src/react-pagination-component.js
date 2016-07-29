@@ -6,79 +6,58 @@ var ReactDOM = require('react-dom');
 var Paginate = React.createClass({
     getInitialState() {
         return {
-            focusNum: this.props.focusNum
+            focusNum: 1
         }
     },
     
+    _handleNumClick: function(num) {
+        this.setState({
+            focusNum: num
+        });
+    },
+    _handleLeftClick: function() {
+        this.setState({
+            focusNum: this.state.focusNum - 1
+        });
+    },
+    _handleRightClick: function() {
+        this.setState({
+            focusNum: this.state.focusNum + 1
+        });
+    },
     render: function() {
-       var firstNumGroup = 3;
-        var lastNumGroup = 2;
-        var focusNumGroup = 6;
-        var ellipsisPrint = 4;
+        var totalPage = this.props.totalPage;
+        var NumGroup = 4;
+        var focusNumGroup = 7;
         var block = [];
-        var lastPageNum = this.props.totalPages;
-        var firstPageNum = 1;
-        var i = 1;
 
-        if (this.props.focusNum == null) {
-            this.state.focusNum = 1;
-        }
-
-        var leftellipsisNum = Math.ceil(((this.state.focusNum - focusNumGroup / 2) - firstNumGroup) / 2 + firstNumGroup);
-        var rightellipsisNum = Math.ceil(((lastPageNum - lastNumGroup) - (this.state.focusNum + focusNumGroup / 2)) / 2 + (this.state.focusNum + focusNumGroup / 2));
-
-        var leftellipsis = leftellipsisNum;
-        var rightellipsis = rightellipsisNum;
-
-        if (this.state.focusNum == firstPageNum) {
-            var clickArrowLeft = null;
-            var disabledLeft = 'disabled';
+        if ( totalPage <= 1 ){
+            block.push('');
         } else {
-            clickArrowLeft = 'left';
-        }
+            var left = <li onClick={ this._handleLeftClick }>&laquo;</li>;
+            var right = <li onClick={ this._handleRightClick }>&raquo;</li>;
 
-        if (this.state.focusNum == lastPageNum) {
-            var clickArrowRight = null;
-            var disabledRight = 'disabled';
-        } else {
-            clickArrowRight = 'right';
-        }
-
-        if (firstPageNum >= lastPageNum) {
-            var left = <span key='left'></span>;
-            block.push(<span key='number'></span>);
-            var right = <span key='right'></span>;
-        } else {
-            left = <li className={disabledLeft}>&laquo; </li>;
-            right = <li className={disabledRight} >&raquo; </li>;
-
-            while (i <= lastPageNum){
-                if (i == ellipsisPrint && this.state.focusNum - firstPageNum > focusNumGroup) {
-                    block.push(<li key={i}>... </li>);
-                    i = this.state.focusNum - focusNumGroup/2;
+            for(var p = 1 ; p <= totalPage ; p++) {
+                if( p == NumGroup && this.state.focusNum - 1 > focusNumGroup - 1) {
+                    block.push(<li key={p}>...</li>);
+                    p = this.state.focusNum - 3;
                 }
-                if (i == this.state.focusNum + ellipsisPrint && lastPageNum - this.state.focusNum > focusNumGroup) {
-                    block.push(<li key={i}> ... </li>);
-                    i = lastPageNum - lastNumGroup;
-                }
-                if (i == this.state.focusNum) {
-                    var classname = 'active';
-                } else {
-                    classname = '';
-                }
-                block.push(<li key={i} className={classname}> {i} </li>);
-                i++;
+                if( p == (this.state.focusNum + NumGroup) && totalPage - this.state.focusNum > focusNumGroup){
+                    block.push(<li key={p}>...</li>);
+                    p = totalPage - NumGroup + 2;
+                }   
+                block.push(<li key={p} onClick={ this._handleNumClick.bind(this, p) }>{p}</li>);
             }
-        }    
-        return(
+        }                  
+        return (
             <ul>
                 {left}
                 {block}
                 {right}
-            
             </ul>
         );
 
+        
     }
 });
 

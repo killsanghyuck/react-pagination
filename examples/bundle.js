@@ -7,7 +7,7 @@ var Demo = React.createClass({
     displayName: 'Demo',
 
     render: function () {
-        return React.createElement(Paginate, { totalPages: '100', focusNum: '6' });
+        return React.createElement(Paginate, { totalPage: '100' });
     }
 });
 
@@ -24,68 +24,47 @@ var Paginate = React.createClass({
 
     getInitialState() {
         return {
-            focusNum: this.props.focusNum
+            focusNum: 1
         };
     },
 
+    _handleNumClick: function (num) {
+        this.setState({
+            focusNum: num
+        });
+    },
+    _handleLeftClick: function () {
+        this.setState({
+            focusNum: this.state.focusNum - 1
+        });
+    },
+    _handleRightClick: function () {
+        this.setState({
+            focusNum: this.state.focusNum + 1
+        });
+    },
     render: function () {
-        var firstNumGroup = 3;
-        var lastNumGroup = 2;
-        var focusNumGroup = 6;
-        var ellipsisPrint = 4;
+        var totalPage = this.props.totalPage;
+        var NumGroup = 4;
+        var focusNumGroup = 7;
         var block = [];
-        var lastPageNum = this.props.totalPages;
-        var firstPageNum = 1;
-        var i = 1;
 
-        if (this.props.focusNum == null) {
-            this.state.focusNum = 1;
-        }
-
-        var leftellipsisNum = Math.ceil((this.state.focusNum - focusNumGroup / 2 - firstNumGroup) / 2 + firstNumGroup);
-        var rightellipsisNum = Math.ceil((lastPageNum - lastNumGroup - (this.state.focusNum + focusNumGroup / 2)) / 2 + (this.state.focusNum + focusNumGroup / 2));
-
-        var leftellipsis = leftellipsisNum;
-        var rightellipsis = rightellipsisNum;
-
-        if (this.state.focusNum == firstPageNum) {
-            var clickArrowLeft = null;
-            var disabledLeft = 'disabled';
+        if (totalPage <= 1) {
+            block.push('');
         } else {
-            clickArrowLeft = 'left';
-        }
+            var left = React.createElement('li', { onClick: this._handleLeftClick }, '«');
+            var right = React.createElement('li', { onClick: this._handleRightClick }, '»');
 
-        if (this.state.focusNum == lastPageNum) {
-            var clickArrowRight = null;
-            var disabledRight = 'disabled';
-        } else {
-            clickArrowRight = 'right';
-        }
-
-        if (firstPageNum >= lastPageNum) {
-            var left = React.createElement('span', { key: 'left' });
-            block.push(React.createElement('span', { key: 'number' }));
-            var right = React.createElement('span', { key: 'right' });
-        } else {
-            left = React.createElement('li', { className: disabledLeft }, '« ');
-            right = React.createElement('li', { className: disabledRight }, '» ');
-
-            while (i <= lastPageNum) {
-                if (i == ellipsisPrint && this.state.focusNum - firstPageNum > focusNumGroup) {
-                    block.push(React.createElement('li', { key: i }, '... '));
-                    i = this.state.focusNum - focusNumGroup / 2;
+            for (var p = 1; p <= totalPage; p++) {
+                if (p == NumGroup && this.state.focusNum - 1 > focusNumGroup - 1) {
+                    block.push(React.createElement('li', { key: p }, '...'));
+                    p = this.state.focusNum - 3;
                 }
-                if (i == this.state.focusNum + ellipsisPrint && lastPageNum - this.state.focusNum > focusNumGroup) {
-                    block.push(React.createElement('li', { key: i }, ' ... '));
-                    i = lastPageNum - lastNumGroup;
+                if (p == this.state.focusNum + NumGroup && totalPage - this.state.focusNum > focusNumGroup) {
+                    block.push(React.createElement('li', { key: p }, '...'));
+                    p = totalPage - NumGroup + 2;
                 }
-                if (i == this.state.focusNum) {
-                    var classname = 'active';
-                } else {
-                    classname = '';
-                }
-                block.push(React.createElement('li', { key: i, className: classname }, ' ', i, ' '));
-                i++;
+                block.push(React.createElement('li', { key: p, onClick: this._handleNumClick.bind(this, p) }, p));
             }
         }
         return React.createElement('ul', null, left, block, right);
