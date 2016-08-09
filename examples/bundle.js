@@ -47,27 +47,49 @@ var Paginate = React.createClass({
         var totalPage = this.props.totalPage;
         var NumGroup = 4;
         var focusNumGroup = 7;
+        var active = '';
         var block = [];
+        var disabled = '';
 
         if (totalPage <= 1) {
             block.push('');
         } else {
-            var left = React.createElement('li', { onClick: this._handleLeftClick }, '«');
-            var right = React.createElement('li', { onClick: this._handleRightClick }, '»');
+
+            if (this.state.focusNum == 1) {
+                disabled = '';
+                var className = 'pagination-item--wide';
+            } else {
+                disabled = this._handleLeftClick;
+                className = 'pagination-item--wide';
+            }
+
+            var left = React.createElement('li', { className: className + " first pagination-link--wide first", onClick: disabled }, 'Prev');
+            var right = React.createElement('li', { className: 'pagination-item--wide last pagination-link--wide last', onClick: this._handleRightClick }, 'Next');
 
             for (var p = 1; p <= totalPage; p++) {
                 if (p == NumGroup && this.state.focusNum - 1 > focusNumGroup - 1) {
-                    block.push(React.createElement('li', { key: p }, '...'));
+                    block.push(React.createElement('li', { className: 'pagination-item pagination-link', key: p }, '...'));
                     p = this.state.focusNum - 3;
                 }
                 if (p == this.state.focusNum + NumGroup && totalPage - this.state.focusNum > focusNumGroup) {
-                    block.push(React.createElement('li', { key: p }, '...'));
+                    block.push(React.createElement('li', { className: 'pagination-item pagination-link', key: p }, '...'));
                     p = totalPage - NumGroup + 2;
                 }
-                block.push(React.createElement('li', { key: p, onClick: this._handleNumClick.bind(this, p) }, p));
+                if (p == 1) {
+                    active = "pagination-item first-number pagination-link";
+                }
+                if (p == totalPage) {
+                    active = "pagination-item--wide last pagination-link";
+                }
+                if (p == this.state.focusNum) {
+                    active = "pagination-item is-active pagination-link";
+                } else {
+                    active = "pagination-item pagination-link";
+                }
+                block.push(React.createElement('li', { className: active, key: p, onClick: this._handleNumClick.bind(this, p) }, p));
             }
         }
-        return React.createElement('ul', null, left, block, right);
+        return React.createElement('div', { className: 'pagination-container wow zoomIn mar-b-1x', 'data-wow-duration': '0.5s' }, React.createElement('ul', { className: 'pagination' }, left, block, right));
     }
 });
 

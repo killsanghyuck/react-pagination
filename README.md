@@ -1,1 +1,1 @@
-# react-paginateion
+# react-pagination

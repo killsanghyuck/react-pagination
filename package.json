@@ -1,6 +1,6 @@
 {
   "name": "react-pagination-component",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "react-pagination-component",
   "main": "lib/react-pagination-component.js",
   "directories": {
@@ -11,8 +11,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "react": "^15.0.0",
-    "react-bootstrap": "^0.30.0"
+    "react": "^15.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.0.0",
@@ -25,12 +24,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/killsanghyuck/react-paginateion.git"
+    "url": "git+https://github.com/killsanghyuck/react-pagination.git"
   },
   "author": "Kill sanghyuck <blain1@naver.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/killsanghyuck/react-paginateion/issues"
+    "url": "https://github.com/killsanghyuck/react-pagination/issues"
   },
-  "homepage": "https://github.com/killsanghyuck/react-paginateion#readme"
+  "homepage": "https://github.com/killsanghyuck/react-pagination#readme"
 }
