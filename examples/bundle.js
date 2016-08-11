@@ -27,7 +27,6 @@ var Paginate = React.createClass({
             focusNum: 1
         };
     },
-
     _handleNumClick: function (num) {
         this.setState({
             focusNum: num
@@ -43,53 +42,102 @@ var Paginate = React.createClass({
             focusNum: this.state.focusNum + 1
         });
     },
+    onMouseOver: function (p) {
+        this.refs[p].style.backgroundColor = '#fa4248';
+        this.refs[p].style.color = 'white';
+        this.refs[p].style.borderRight = '1px solid #fff';
+    },
+    onMouseOut: function (p) {
+        this.refs[p].style.backgroundColor = '';
+        this.refs[p].style.color = 'black';
+        this.refs[p].style.borderRight = '1px solid #d7dadb';
+    },
+
     render: function () {
         var totalPage = this.props.totalPage;
         var NumGroup = 4;
         var focusNumGroup = 7;
         var active = '';
         var block = [];
-        var disabled = '';
+
+        var numStyle = '';
+
+        //func
+        var leftClick = '';
+        var rightClick = '';
+        var onMouseOver = '';
+        var onMouseOut = '';
+
+        //style
+        var pagination = {
+            fontFamily: 'Roboto',
+            fontStyle: 'normal',
+            fontWeight: 300,
+            src: "local('Roboto Light'), local('Roboto-Light'), url(http://fonts.gstatic.com/s/roboto/v15/0eC6fl06luXEYWpBSJvXCIX0hVgzZQUfRDuZrPvH3D8.woff2) format('woff2')",
+            unicodeRange: 'U+0460-052F, U+20B4, U+2DE0-2DFF, U+A640-A69F'
+        };
+        var paginationItem = {
+            num: {
+                display: 'inline-block',
+                color: 'black',
+                listStyleType: 'none',
+                borderRight: '1px solid #d7dadb',
+                padding: '1.1em 1.6em'
+            },
+            active: {
+                display: 'inline-block',
+                color: 'white',
+                listStyleType: 'none',
+                padding: '1.1em 1.6em',
+                backgroundColor: '#fa4248',
+                borderRight: '1px solid #fff'
+            }
+        };
 
         if (totalPage <= 1) {
             block.push('');
         } else {
 
             if (this.state.focusNum == 1) {
-                disabled = '';
-                var className = 'pagination-item--wide';
+                leftClick = '';
             } else {
-                disabled = this._handleLeftClick;
-                className = 'pagination-item--wide';
+                leftClick = this._handleLeftClick;
             }
 
-            var left = React.createElement('li', { className: className + " first pagination-link--wide first", onClick: disabled }, 'Prev');
-            var right = React.createElement('li', { className: 'pagination-item--wide last pagination-link--wide last', onClick: this._handleRightClick }, 'Next');
+            if (this.state.focusNum == totalPage) {
+                rightClick = '';
+            } else {
+                rightClick = this._handleRightClick;
+            }
+
+            var left = React.createElement('li', { style: paginationItem.num, onClick: leftClick }, 'Prev');
+            var right = React.createElement('li', { style: paginationItem.num, onClick: rightClick }, 'Next');
 
             for (var p = 1; p <= totalPage; p++) {
                 if (p == NumGroup && this.state.focusNum - 1 > focusNumGroup - 1) {
-                    block.push(React.createElement('li', { className: 'pagination-item pagination-link', key: p }, '...'));
+                    block.push(React.createElement('li', { style: paginationItem.num, key: p }, '...'));
                     p = this.state.focusNum - 3;
                 }
                 if (p == this.state.focusNum + NumGroup && totalPage - this.state.focusNum > focusNumGroup) {
-                    block.push(React.createElement('li', { className: 'pagination-item pagination-link', key: p }, '...'));
+                    block.push(React.createElement('li', { style: paginationItem.num, key: p }, '...'));
                     p = totalPage - NumGroup + 2;
                 }
-                if (p == 1) {
-                    active = "pagination-item first-number pagination-link";
-                }
-                if (p == totalPage) {
-                    active = "pagination-item--wide last pagination-link";
-                }
+                if (p == 1) {}
+                if (p == totalPage) {}
+
                 if (p == this.state.focusNum) {
-                    active = "pagination-item is-active pagination-link";
+                    numStyle = paginationItem.active;
+                    onMouseOver = '';
+                    onMouseOut = '';
                 } else {
-                    active = "pagination-item pagination-link";
+                    numStyle = paginationItem.num;
+                    onMouseOut = this.onMouseOut.bind(this, 'num' + p);
+                    onMouseOver = this.onMouseOver.bind(this, 'num' + p);
                 }
-                block.push(React.createElement('li', { className: active, key: p, onClick: this._handleNumClick.bind(this, p) }, p));
+                block.push(React.createElement('li', { style: numStyle, ref: 'num' + p, key: p, onClick: this._handleNumClick.bind(this, p), onMouseOver: onMouseOver, onMouseOut: onMouseOut }, p));
             }
         }
-        return React.createElement('div', { className: 'pagination-container wow zoomIn mar-b-1x', 'data-wow-duration': '0.5s' }, React.createElement('ul', { className: 'pagination' }, left, block, right));
+        return React.createElement('div', { style: this.state.pagination, 'data-wow-duration': '0.5s' }, React.createElement('ul', null, left, block, right));
     }
 });
 
@@ -20398,7 +20446,6 @@ module.exports = require('./lib/React');
 
 },{"./lib/React":29}],173:[function(require,module,exports){
 // shim for using process in browser
-
 var process = module.exports = {};
 
 // cached from whatever global is present so that test runners that stub it
@@ -20410,21 +20457,63 @@ var cachedSetTimeout;
 var cachedClearTimeout;
 
 (function () {
-  try {
-    cachedSetTimeout = setTimeout;
-  } catch (e) {
-    cachedSetTimeout = function () {
-      throw new Error('setTimeout is not defined');
+    try {
+        cachedSetTimeout = setTimeout;
+    } catch (e) {
+        cachedSetTimeout = function () {
+            throw new Error('setTimeout is not defined');
+        }
     }
-  }
-  try {
-    cachedClearTimeout = clearTimeout;
-  } catch (e) {
-    cachedClearTimeout = function () {
-      throw new Error('clearTimeout is not defined');
+    try {
+        cachedClearTimeout = clearTimeout;
+    } catch (e) {
+        cachedClearTimeout = function () {
+            throw new Error('clearTimeout is not defined');
+        }
     }
-  }
 } ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
 var queue = [];
 var draining = false;
 var currentQueue;
@@ -20449,7 +20538,7 @@ function drainQueue() {
     if (draining) {
         return;
     }
-    var timeout = cachedSetTimeout(cleanUpNextTick);
+    var timeout = runTimeout(cleanUpNextTick);
     draining = true;
 
     var len = queue.length;
@@ -20466,7 +20555,7 @@ function drainQueue() {
     }
     currentQueue = null;
     draining = false;
-    cachedClearTimeout(timeout);
+    runClearTimeout(timeout);
 }
 
 process.nextTick = function (fun) {
@@ -20478,7 +20567,7 @@ process.nextTick = function (fun) {
     }
     queue.push(new Item(fun, args));
     if (queue.length === 1 && !draining) {
-        cachedSetTimeout(drainQueue, 0);
+        runTimeout(drainQueue);
     }
 };
 
