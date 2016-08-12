@@ -45,12 +45,10 @@ var Paginate = React.createClass({
     onMouseOver: function (p) {
         this.refs[p].style.backgroundColor = '#fa4248';
         this.refs[p].style.color = 'white';
-        this.refs[p].style.borderRight = '1px solid #fff';
     },
     onMouseOut: function (p) {
         this.refs[p].style.backgroundColor = '';
         this.refs[p].style.color = 'black';
-        this.refs[p].style.borderRight = '1px solid #d7dadb';
     },
 
     render: function () {
@@ -70,6 +68,8 @@ var Paginate = React.createClass({
 
         //style
         var pagination = {
+            textAlign: 'center',
+            marginTop: '20px',
             fontFamily: 'Roboto',
             fontStyle: 'normal',
             fontWeight: 300,
@@ -82,15 +82,28 @@ var Paginate = React.createClass({
                 color: 'black',
                 listStyleType: 'none',
                 borderRight: '1px solid #d7dadb',
-                padding: '1.1em 1.6em'
+                padding: '0.7em 1.5em'
             },
             active: {
                 display: 'inline-block',
                 color: 'white',
                 listStyleType: 'none',
-                padding: '1.1em 1.6em',
+                padding: '0.7em 1.5em',
                 backgroundColor: '#fa4248',
                 borderRight: '1px solid #fff'
+            },
+            prev: {
+                display: 'inline-block',
+                color: 'black',
+                listStyleType: 'none',
+                borderRight: '1px solid #d7dadb',
+                padding: '0.7em 1.8em'
+            },
+            next: {
+                display: 'inline-block',
+                color: 'black',
+                listStyleType: 'none',
+                padding: '0.7em 1.8em'
             }
         };
 
@@ -110,8 +123,8 @@ var Paginate = React.createClass({
                 rightClick = this._handleRightClick;
             }
 
-            var left = React.createElement('li', { style: paginationItem.num, onClick: leftClick }, 'Prev');
-            var right = React.createElement('li', { style: paginationItem.num, onClick: rightClick }, 'Next');
+            var left = React.createElement('li', { ref: 'numLeft', style: paginationItem.prev, onClick: leftClick, onMouseOver: this.onMouseOver.bind(this, 'numLeft'), onMouseOut: this.onMouseOut.bind(this, 'numLeft') }, 'Prev');
+            var right = React.createElement('li', { ref: 'numRight', style: paginationItem.next, onClick: rightClick, onMouseOver: this.onMouseOver.bind(this, 'numRight'), onMouseOut: this.onMouseOut.bind(this, 'numRight') }, 'Next');
 
             for (var p = 1; p <= totalPage; p++) {
                 if (p == NumGroup && this.state.focusNum - 1 > focusNumGroup - 1) {
@@ -137,7 +150,7 @@ var Paginate = React.createClass({
                 block.push(React.createElement('li', { style: numStyle, ref: 'num' + p, key: p, onClick: this._handleNumClick.bind(this, p), onMouseOver: onMouseOver, onMouseOut: onMouseOut }, p));
             }
         }
-        return React.createElement('div', { style: this.state.pagination, 'data-wow-duration': '0.5s' }, React.createElement('ul', null, left, block, right));
+        return React.createElement('div', { style: pagination, 'data-wow-duration': '0.5s' }, React.createElement('ul', null, left, block, right));
     }
 });
 

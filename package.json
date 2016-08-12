@@ -1,6 +1,6 @@
 {
   "name": "react-pagination-component",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "react-pagination-component",
   "main": "lib/react-pagination-component.js",
   "directories": {
