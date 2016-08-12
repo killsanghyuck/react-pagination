@@ -20,11 +20,7 @@
     "babel-preset-react": "^6.3.13",
     "babelify": "^7.2.0",
     "browserify": "^13.0.0",
-    "css-loader": "^0.23.1",
-    "jsx-loader": "^0.13.2",
-    "react-dom": "^15.0.0",
-    "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.1"
+    "react-dom": "^15.0.0"
   },
   "repository": {
     "type": "git",
