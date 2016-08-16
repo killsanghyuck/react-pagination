@@ -68,7 +68,6 @@ var Paginate = React.createClass({
 
         //style
         var pagination = {
-            minWidth: '1200px',
             textAlign: 'center',
             marginTop: '20px',
             fontFamily: 'Roboto',
