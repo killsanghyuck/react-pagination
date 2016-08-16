@@ -3,15 +3,13 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var Paginate = require('../lib/react-pagination-component.js');
 
-var Demo = React.createClass({
-    displayName: 'Demo',
+var demo1 = document.getElementById('demo1');
+var demo2 = document.getElementById('demo2');
+var demo3 = document.getElementById('demo3');
 
-    render: function () {
-        return React.createElement(Paginate, { totalPage: '100' });
-    }
-});
-
-ReactDOM.render(React.createElement(Demo, null), document.getElementById('demo'));
+ReactDOM.render(React.createElement(Paginate, { totalPage: 100 }), demo1);
+ReactDOM.render(React.createElement(Paginate, { totalPage: 100 }), demo2);
+ReactDOM.render(React.createElement(Paginate, { totalPage: 8 }), demo3);
 
 },{"../lib/react-pagination-component.js":2,"react":175,"react-dom":3}],2:[function(require,module,exports){
 'use strict';
