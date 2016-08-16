@@ -42,6 +42,16 @@ var Paginate = React.createClass({
             focusNum: this.state.focusNum + 1
         });
     },
+    leftellipsisNum: function () {
+        this.setState({
+            focusNum: Math.ceil((this.state.focusNum - 3 - 3) / 2 + 3)
+        });
+    },
+    rightellipsisNum: function () {
+        this.setState({
+            focusNum: Math.ceil((this.props.totalPage - 3 - (this.state.focusNum + 3)) / 2 + (this.state.focusNum + 3))
+        });
+    },
     onMouseOver: function (p) {
         this.refs[p].style.backgroundColor = '#fa4248';
         this.refs[p].style.color = 'white';
@@ -128,11 +138,11 @@ var Paginate = React.createClass({
 
             for (var p = 1; p <= totalPage; p++) {
                 if (p == NumGroup && this.state.focusNum - 1 > focusNumGroup - 1) {
-                    block.push(React.createElement('li', { style: paginationItem.num, key: p }, '...'));
+                    block.push(React.createElement('li', { ref: 'leftellipsisNum', style: paginationItem.num, onClick: this.leftellipsisNum, onMouseOver: this.onMouseOver.bind(this, 'leftellipsisNum'), onMouseOut: this.onMouseOut.bind(this, 'leftellipsisNum'), key: p }, '...'));
                     p = this.state.focusNum - 3;
                 }
                 if (p == this.state.focusNum + NumGroup && totalPage - this.state.focusNum > focusNumGroup) {
-                    block.push(React.createElement('li', { style: paginationItem.num, key: p }, '...'));
+                    block.push(React.createElement('li', { ref: 'rightellipsisNum', style: paginationItem.num, onClick: this.rightellipsisNum, onMouseOver: this.onMouseOver.bind(this, 'rightellipsisNum'), onMouseOut: this.onMouseOut.bind(this, 'rightellipsisNum'), key: p }, '...'));
                     p = totalPage - NumGroup + 2;
                 }
                 if (p == 1) {}
