@@ -7,15 +7,23 @@ Preview: https://killsanghyuck.github.io/react-pagination/
 npm install react-pagination-component
 ```
 ## Configuration
-`totalPage` : (number) total page number
+`totalPage` : (number) total page number <br>
+`focusPage` : (function) callback the current page number
 ## Usage
 ```js
 var React = require('react');
 var ReactDOM = require('react-dom');
-var Paginate = require('../lib/react-pagination-component.js');
+var Paginate = require('./react-pagination-component.js');
+
+var demo = document.getElementById('demo');
+var p = document.getElementById('page-num');
+
+function changePage(page){
+    p.innerText = 'focus page : ' + page;
+};
 
 ReactDOM.render(
-    <Paginate totalPage={100} />,
-    document.getElementById('example');
+    <Paginate totalPage={100} focusPage={changePage} />,
+    demo
 );
 ```
