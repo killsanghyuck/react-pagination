@@ -6,10 +6,23 @@ var Paginate = require('../lib/react-pagination-component.js');
 var demo1 = document.getElementById('demo1');
 var demo2 = document.getElementById('demo2');
 var demo3 = document.getElementById('demo3');
+var p1 = document.getElementById('page-num1');
+var p2 = document.getElementById('page-num2');
+var p3 = document.getElementById('page-num3');
 
-ReactDOM.render(React.createElement(Paginate, { totalPage: 100 }), demo1);
-ReactDOM.render(React.createElement(Paginate, { totalPage: 100 }), demo2);
-ReactDOM.render(React.createElement(Paginate, { totalPage: 8 }), demo3);
+function changePage1(page) {
+    p1.innerText = 'page' + page;
+};
+function changePage2(page) {
+    p2.innerText = 'page' + page;
+};
+function changePage3(page) {
+    p3.innerText = 'page' + page;
+};
+
+ReactDOM.render(React.createElement(Paginate, { totalPage: 100, focusPage: changePage1 }), demo1);
+ReactDOM.render(React.createElement(Paginate, { totalPage: 100, focusPage: changePage2 }), demo2);
+ReactDOM.render(React.createElement(Paginate, { totalPage: 8, focusPage: changePage3 }), demo3);
 
 },{"../lib/react-pagination-component.js":2,"react":175,"react-dom":3}],2:[function(require,module,exports){
 'use strict';
@@ -29,26 +42,31 @@ var Paginate = React.createClass({
         this.setState({
             focusNum: num
         });
+        this.props.focusPage(num);
     },
     _handleLeftClick: function () {
         this.setState({
             focusNum: this.state.focusNum - 1
         });
+        this.props.focusPage(this.state.focusNum - 1);
     },
     _handleRightClick: function () {
         this.setState({
             focusNum: this.state.focusNum + 1
         });
+        this.props.focusPage(this.state.focusNum + 1);
     },
     leftellipsisNum: function () {
         this.setState({
             focusNum: Math.ceil((this.state.focusNum - 3 - 3) / 2 + 3)
         });
+        this.props.focusPage(Math.ceil((this.state.focusNum - 3 - 3) / 2 + 3));
     },
     rightellipsisNum: function () {
         this.setState({
             focusNum: Math.ceil((this.props.totalPage - 3 - (this.state.focusNum + 3)) / 2 + (this.state.focusNum + 3))
         });
+        this.props.focusPage(Math.ceil((this.props.totalPage - 3 - (this.state.focusNum + 3)) / 2 + (this.state.focusNum + 3)));
     },
     onMouseOver: function (p) {
         this.refs[p].style.backgroundColor = '#fa4248';

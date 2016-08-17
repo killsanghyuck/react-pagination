@@ -12,26 +12,31 @@ var Paginate = React.createClass({
         this.setState({
             focusNum: num
         });
+        this.props.focusPage(num);
     },
     _handleLeftClick: function() {
         this.setState({
             focusNum: this.state.focusNum - 1
         });
+        this.props.focusPage(this.state.focusNum - 1);
     },
     _handleRightClick: function() {
         this.setState({
             focusNum: this.state.focusNum + 1
         });
+        this.props.focusPage(this.state.focusNum + 1);
     },
     leftellipsisNum: function() {
         this.setState({
             focusNum: Math.ceil(((this.state.focusNum - 3) - 3) / 2 + 3)
         });
+        this.props.focusPage(Math.ceil(((this.state.focusNum - 3) - 3) / 2 + 3));
     },
     rightellipsisNum: function() {
         this.setState({
             focusNum: Math.ceil(((this.props.totalPage - 3) - (this.state.focusNum + 3)) / 2 + (this.state.focusNum + 3))
         });
+        this.props.focusPage(Math.ceil(((this.props.totalPage - 3) - (this.state.focusNum + 3)) / 2 + (this.state.focusNum + 3)));
     },
     onMouseOver: function(p) {
         this.refs[p].style.backgroundColor = '#fa4248';
